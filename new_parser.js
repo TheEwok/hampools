@@ -1,4 +1,7 @@
-const util = require('util');
+const readline = require('readline');
+const fs = require('fs');
+
+const INFILE = 'resources/extra/Extra_Class_Pool.txt';
 
 const SUBELEMENT_PATTERN = /SUBELEMENT [TGE]\d /;
 const GROUP_PATTERN = /[TGE]\d[A-Z] /;
@@ -15,14 +18,15 @@ var Parser = function() {
   this.subelements = {};
   this.finished = false;
   this.next = function(token) {
-    if (!this.item) {
-      // we are outside an item
-      if (this.finished) { return; }
-      if (token.match(END_PATTERN)) {
+    if (this.finished) { 
+      return; 
+    } else if (token.match(END_PATTERN)) {
         this._store_subelement();
         this.finished = true;
         return;
-      } else if (token.match(ITEM_PATTERN)) {
+    } else if (!this.item) {
+      // we are outside an item
+      if (token.match(ITEM_PATTERN)) {
         this.item = new Item(token);
       } else if (token.match(GROUP_PATTERN)) {
         this._store_group();
@@ -121,31 +125,14 @@ var Option = function(s) {
 
 var p = new Parser();
 
-p.next("SUBELEMENT E1 - COMMISSION'S RULES [6 Exam Questions - 6 Groups]");
-p.next('');
-p.next('E1A Operating Standards: frequency privileges; emission standards; automatic message');
-p.next('forwarding; frequency sharing; stations aboard ships or aircraft');
-p.next('');
-p.next('E1A01 (D) [97.301, 97.305]');
-p.next('When using a transceiver that displays the carrier frequency of phone signals, which ');
-p.next('of the following displayed frequencies represents the highest frequency at which a ');
-p.next('properly adjusted USB emission will be totally within the band?');
-p.next('A. The exact upper band edge');
-p.next('B. 300 Hz below the upper band edge');
-p.next('C. 1 kHz below the upper band edge');
-p.next('D. 3 kHz below the upper band edge');
-p.next('~~');
-p.next('');
-p.next('E1A02 (D) [97.301, 97.305]');
-p.next('When using a transceiver that displays the carrier frequency of phone signals, which');
-p.next('of the following displayed frequencies represents the lowest frequency at which a');
-p.next('properly adjusted LSB emission will be totally within the band?');
-p.next('A. The exact lower band edge');
-p.next('B. 300 Hz above the lower band edge');
-p.next('C. 1 kHz above the lower band edge');
-p.next('D. 3 kHz above the lower band edge');
-p.next('~~');
-p.next('~~~~End of question pool text~~~~');
+readline.createInterface({
+  input: fs.createReadStream(INFILE),
+  terminal: false
+}).on('line',
+  function(line) {
+    p.next(line);
+}).on('close',
+	function () {
+    console.log(JSON.stringify(p, null, 4));
+	});
 
-//console.log(util.inspect(p));
-console.log(JSON.stringify(p, null, 4));
