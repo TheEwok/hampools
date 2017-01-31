@@ -1,17 +1,27 @@
 {
-  "name": "ham",
+  "name": "hampools",
   "version": "1.0.0",
-  "description": "",
+  "description": "More accesible VE question pools",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/theewok/hampools.git"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Baz O'Mahony <the.ewok@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^1.1.3",
     "split": "^1.0.0",
     "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0"
   }
 }
