@@ -5423,7 +5423,7 @@ A. Faster transmission rate
 B. The signal can overpower interfering signals
 C. Foreign language characters can be sent
 D. Some types of errors can be detected
-
+~~
 
 SUBELEMENT E9 - ANTENNAS AND TRANSMISSION LINES [8 Exam Questions - 8 Groups]
 
